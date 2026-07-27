@@ -1,0 +1,100 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Variants display\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-27 15:33+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.8.7; wp-7.0; php-8.3.31\n"
+"X-Domain: variants_display"
+
+#. Description of the plugin
+msgid "Change the way variants are displayed on Woocommerce product detail."
+msgstr ""
+
+#: include/admin.php:51
+msgid "Color"
+msgstr ""
+
+#: include/admin.php:194 include/admin.php:205
+msgid "Color (hex)"
+msgstr ""
+
+#: include/admin.php:279
+msgid "Completely hide unavailable options (instead of graying out)"
+msgstr ""
+
+#: include/admin.php:48
+msgid "Default"
+msgstr ""
+
+#: include/admin.php:56
+msgid "Display type"
+msgstr ""
+
+#: include/admin.php:242
+msgid "Enable admin menu entry"
+msgstr ""
+
+#: include/admin.php:235
+msgid "General Settings"
+msgstr ""
+
+#: include/admin.php:250
+msgid "Hide unavailable variants"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://hrubos.dev"
+msgstr ""
+
+#: include/admin.php:50
+msgid "Large"
+msgstr ""
+
+#. Author of the plugin
+msgid "Ondřej Hruboš"
+msgstr ""
+
+#: include/admin.php:196 include/admin.php:208
+msgid ""
+"Optional. If set, this fills the selector button directly instead of using a "
+"variation image."
+msgstr ""
+
+#: include/admin.php:49
+msgid "Pills"
+msgstr ""
+
+#: include/frontend.php:571
+msgid "Show less"
+msgstr ""
+
+#: include/frontend.php:231 include/frontend.php:570
+msgid "Show more"
+msgstr ""
+
+#: include/admin.php:271
+msgid "Show plugin in admin sidebar"
+msgstr ""
+
+#: include/admin.php:285 include/admin.php:286 include/admin.php:297
+#: include/admin.php:298
+msgid "Variants Display"
+msgstr ""
+
+#. Name of the plugin
+msgid "Variants display"
+msgstr ""
+
+#: include/admin.php:311
+msgid "Variants Display Settings"
+msgstr ""

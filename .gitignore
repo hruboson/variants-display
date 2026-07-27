@@ -1,0 +1,79 @@
+# =========================
+# PHP / Composer
+# =========================
+
+/vendor/
+composer.lock
+composer.phar
+
+# PHP cache
+*.php~
+*.phps
+*.phtml~
+
+# =========================
+# WordPress
+# =========================
+
+# Core
+/wp-admin/
+/wp-includes/
+
+# Config
+wp-config.php
+wp-config-local.php
+
+# Debug logs
+*.log
+debug.log
+
+# WordPress uploads
+/wp-content/uploads/
+
+# Cache
+/wp-content/cache/
+/wp-content/upgrade/
+
+# =========================
+# Plugins / Themes
+# =========================
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# =========================
+# Translation files
+# =========================
+
+# Loco Translate backups
+*.po~
+*.pot~
+*.mo~
+
+# General editor backups
+*~
+*.bak
+*.swp
+*.swo
+
+# Translation temporary files
+*.tmp
+*.temp
+
+# =========================
+# IDEs
+# =========================
+
+.idea/
+.vscode/
+
+# =========================
+# OS files
+# =========================
+
+.DS_Store
+Thumbs.db

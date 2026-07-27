@@ -1,0 +1,102 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Variants display\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-27 15:33+0000\n"
+"PO-Revision-Date: 2026-07-27 15:36+0000\n"
+"Last-Translator: \n"
+"Language-Team: Čeština\n"
+"Language: cs_CZ\n"
+"Plural-Forms: nplurals=3; plural=( n == 1 ) ? 0 : ( n >= 2 && n <= 4 ) ? 1 : "
+"2;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.8.7; wp-7.0; php-8.3.31\n"
+"X-Domain: variants_display"
+
+#. Description of the plugin
+msgid "Change the way variants are displayed on Woocommerce product detail."
+msgstr "Změnte způsob zobrazování variant u Woocommerce produktů."
+
+#: include/admin.php:51
+msgid "Color"
+msgstr "Barva"
+
+#: include/admin.php:194 include/admin.php:205
+msgid "Color (hex)"
+msgstr "Barva (hex)"
+
+#: include/admin.php:279
+msgid "Completely hide unavailable options (instead of graying out)"
+msgstr "Zcela skryjte nedostupné varianty (namísto zašednutí)"
+
+#: include/admin.php:48
+msgid "Default"
+msgstr "Výchozí"
+
+#: include/admin.php:56
+msgid "Display type"
+msgstr "Způsob zobrazování"
+
+#: include/admin.php:242
+msgid "Enable admin menu entry"
+msgstr "Povolit nastavení v menu administrace"
+
+#: include/admin.php:235
+msgid "General Settings"
+msgstr "Obecné nastavení"
+
+#: include/admin.php:250
+msgid "Hide unavailable variants"
+msgstr "Skrýt nedostupné varianty"
+
+#. Author URI of the plugin
+msgid "https://hrubos.dev"
+msgstr ""
+
+#: include/admin.php:50
+msgid "Large"
+msgstr "Dlaždice"
+
+#. Author of the plugin
+msgid "Ondřej Hruboš"
+msgstr ""
+
+#: include/admin.php:196 include/admin.php:208
+msgid ""
+"Optional. If set, this fills the selector button directly instead of using a "
+"variation image."
+msgstr ""
+"Volitelné. Pokud je nastaveno, vyplní tlačítko varianty barvou, namísto "
+"použití obrázku varianty."
+
+#: include/admin.php:49
+msgid "Pills"
+msgstr "Tlačítka"
+
+#: include/frontend.php:571
+msgid "Show less"
+msgstr "Zobrazit méně"
+
+#: include/frontend.php:231 include/frontend.php:570
+msgid "Show more"
+msgstr "Zobrazit více"
+
+#: include/admin.php:271
+msgid "Show plugin in admin sidebar"
+msgstr "Zobrazit plugin v postranním menu administrace"
+
+#: include/admin.php:285 include/admin.php:286 include/admin.php:297
+#: include/admin.php:298
+msgid "Variants Display"
+msgstr "Zobrazení Variant"
+
+#. Name of the plugin
+msgid "Variants display"
+msgstr "Zobrazení variant"
+
+#: include/admin.php:311
+msgid "Variants Display Settings"
+msgstr "Nastavení Zobrazení Variant"
