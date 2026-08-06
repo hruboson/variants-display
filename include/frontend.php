@@ -185,6 +185,49 @@ class VARIANTS_DISPLAY_Frontend {
 		// swatches actually fit per row at the visitor's current viewport
 		// width. JS measures the real, rendered layout and decides.
 		echo '<div class="vd-color-wrapper">';
+
+		// Right-aligned filter bar - sits at the top of this attribute's
+		// value cell, i.e. the same table row WooCommerce renders the
+		// attribute name in (label cell to the left, this to the right).
+		echo '<div class="vd-color-header">';
+		echo '<div class="vd-color-filter" data-vd-filter-for="' . esc_attr( $name ) . '">';
+		printf(
+			'<button type="button" class="vd-color-filter-toggle" aria-expanded="false" aria-haspopup="true">
+				<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true">
+					<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M7 12h10M10 18h4" />
+				</svg>
+				<span>%s</span>
+			</button>',
+			esc_html__( 'Filter', 'variants_display' )
+		);
+
+		echo '<div class="vd-color-filter-panel" hidden>';
+		printf(
+			'<input type="text" class="vd-color-filter-search" placeholder="%s" aria-label="%s" />',
+			esc_attr__( 'Search colors…', 'variants_display' ),
+			esc_attr__( 'Search colors', 'variants_display' )
+		);
+		echo '<div class="vd-color-filter-options">';
+
+		foreach ( $items as $item ) {
+			$checkbox_id = esc_attr( $name . '-filter-' . sanitize_title( $item['value'] ) );
+			printf(
+				'<label for="%1$s" class="vd-color-filter-option" data-vd-filter-value="%2$s" data-vd-filter-label="%3$s">
+					<input type="checkbox" id="%1$s" class="vd-color-filter-checkbox" value="%2$s" />
+					<span>%4$s</span>
+				</label>',
+				$checkbox_id,
+				esc_attr( $item['value'] ),
+				esc_attr( function_exists( 'mb_strtolower' ) ? mb_strtolower( $item['label'] ) : strtolower( $item['label'] ) ),
+				esc_html( $item['label'] )
+			);
+		}
+
+		echo '</div>'; // .vd-color-filter-options
+		echo '</div>'; // .vd-color-filter-panel
+		echo '</div>'; // .vd-color-filter
+		echo '</div>'; // .vd-color-header
+
 		echo '<div class="vd-selector vd-selector--color" data-vd-select-name="' . esc_attr( $name ) . '">';
 
 		foreach ( $items as $item ) {
@@ -285,7 +328,7 @@ class VARIANTS_DISPLAY_Frontend {
 				$item['image_url']
 					? '<div class="vd-large-image">
 							<img src="' . esc_url( $item['image_url'] ) . '" alt="' . esc_attr( $item['label'] ) . '">
-					 </div>'
+					</div>'
 					: '',
 
 				esc_html( $item['label'] )
@@ -365,7 +408,7 @@ class VARIANTS_DISPLAY_Frontend {
 			}
 
 			/* text-based labels (pills, large card name, color's plain-text
-			   fallback) - strike through the label text itself, in grey */
+			  fallback) - strike through the label text itself, in grey */
 			.vd-option-label--pills.vd-option-disabled,
 			.vd-option-label--color.vd-option-disabled,
 			.vd-large-card.vd-option-disabled .vd-large-name {
@@ -376,8 +419,8 @@ class VARIANTS_DISPLAY_Frontend {
 			}
 
 			/* color swatches usually have no visible text (hex fill or
-			   image), so overlay a diagonal grey strike across the box
-			   instead of relying on text-decoration */
+			  image), so overlay a diagonal grey strike across the box
+			  instead of relying on text-decoration */
 			.vd-option-label--color.vd-option-disabled {
 				position: relative;
 			}
@@ -438,6 +481,117 @@ class VARIANTS_DISPLAY_Frontend {
 			.vd-selector--color .vd-option-input:checked + .vd-option-label--color {
 				border-color: #000;
 				border-width: 2px;
+			}
+
+			/* swatches hidden by the color-name filter (independent of the
+			  availability styling above - always fully hidden, not greyed) */
+			.vd-option-label--color.vd-color-filtered-out {
+				display: none !important;
+			}
+
+			/*****************
+			* COLOR FILTER *
+			*****************/
+			.vd-color-header {
+				display: flex;
+				justify-content: flex-end;
+				margin-bottom: 8px;
+			}
+			/* Once JS relocates .vd-color-filter into the attribute's
+			  label cell (the common case), this wrapper is left empty
+			  in the value cell - collapse it instead of leaving a gap. */
+			.vd-color-header:empty {
+				display: none;
+				margin-bottom: 0;
+			}
+			/* The attribute label cell, once it's holding the filter:
+			  keep the "barva"/"Color" text on the left, filter on the right. */
+			.vd-has-color-filter {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 8px;
+			}
+			.vd-color-filter {
+				position: relative;
+			}
+			.vd-color-filter-toggle {
+				display: inline-flex;
+				align-items: center;
+				/*gap: 6px;*/
+				padding: 2px 12px;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				background: white;
+				cursor: pointer;
+				font-size: 14px;
+				color: inherit;
+			}
+			.vd-color-filter-toggle svg {
+				width: 16px;
+				height: 16px;
+				display: block;
+			}
+			.vd-color-filter-toggle.vd-filter-active {
+				border-color: var(--theme-palette-color-1);
+				color: var(--theme-palette-color-1);
+			}
+			.vd-color-filter-panel {
+				position: absolute;
+				top: 100%;
+				right: 0;
+				margin-top: 6px;
+				width: 220px;
+				max-height: 280px;
+				overflow-y: auto;
+				background: white;
+				border: 1px solid #ccc;
+				border-radius: 6px;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, .15);
+				padding: 10px;
+				z-index: 30;
+				box-sizing: border-box;
+			}
+			.vd-color-filter-panel[hidden] {
+				display: none;
+			}
+			.vd-color-filter-search {
+				width: 100%;
+				box-sizing: border-box;
+				padding: 7px 9px;
+				margin-bottom: 8px;
+				border: 1px solid #ddd;
+				border-radius: 4px;
+				font-size: 14px;
+			}
+			.vd-color-filter-options {
+				display: flex;
+				flex-direction: column;
+				gap: 2px;
+			}
+			.vd-color-filter-option {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				font-size: 14px;
+				cursor: pointer;
+				padding: 5px 6px;
+				border-radius: 4px;
+			}
+			.vd-color-filter-option:hover {
+				background: var(--theme-palette-color-7, #f5f5f5);
+			}
+			.vd-color-filter-option[hidden] {
+				display: none;
+			}
+			.vd-color-filter-checkbox {
+				margin: 0;
+				flex-shrink: 0;
+			}
+			.vd-color-filter-empty {
+				font-size: 13px;
+				color: #888;
+				padding: 6px;
 			}
 
 			/****************
@@ -568,7 +722,8 @@ class VARIANTS_DISPLAY_Frontend {
 		<script>
 		var vdTranslations = {
 			showMore: <?php echo wp_json_encode( __( 'Show more', 'variants_display' ) ); ?>,
-			showLess: <?php echo wp_json_encode( __( 'Show less', 'variants_display' ) ); ?>
+			showLess: <?php echo wp_json_encode( __( 'Show less', 'variants_display' ) ); ?>,
+			noColorsFound: <?php echo wp_json_encode( __( 'No colors found', 'variants_display' ) ); ?>
 		};
 
 		// Full variation matrix, keyed by product ID, printed by PHP so it's
@@ -589,6 +744,36 @@ class VARIANTS_DISPLAY_Frontend {
 				$('select[name="' + selectName + '"]')
 					.addClass('vd-has-custom-selector');
 			});
+
+			/**
+			* The filter button/panel is printed inside the attribute's
+			* value cell (next to the swatches), but it should visually
+			* sit in the same row as the attribute's name, right-aligned.
+			* WooCommerce's variation table renders the name in a sibling
+			* <th class="label">/<td class="label"> cell within the same
+			* <tr>, so we move the filter there once, on load. If no such
+			* cell exists (a theme with different markup), it's left in
+			* its original spot at the top of the value cell instead.
+			*/
+			function vdRelocateColorFilters() {
+				$('.vd-color-filter').each(function() {
+					var $filter = $(this);
+
+					if ( $filter.data('vd-relocated') ) {
+						return;
+					}
+
+					var $labelCell = $filter.closest('tr').find('> th.label, > td.label').first();
+
+					if ( $labelCell.length ) {
+						$labelCell.addClass('vd-has-color-filter').append( $filter );
+					}
+
+					$filter.data('vd-relocated', true);
+				});
+			}
+
+			vdRelocateColorFilters();
 
 			// Reflect clicks in any .vd-selector back onto the real select,
 			// then trigger 'change' — the event WooCommerce's own
@@ -629,6 +814,97 @@ class VARIANTS_DISPLAY_Frontend {
 				});
 
 				return selections;
+			}
+
+			/**
+			* Color name filter (color type only).
+			*
+			* Two independent things feed into what's actually shown:
+			* 1) Which filter checkboxes are even offered - only values
+			*    that are currently available (not disabled by
+			*    vdSyncSelectorStates) and that match the search box text.
+			* 2) Which swatches are visible - hidden outright (not just
+			*    greyed) if the user has checked one or more filter boxes
+			*    and this swatch's value isn't among them.
+			*
+			* Note: once vdRelocateColorFilters() moves .vd-color-filter
+			* into the label cell, it's no longer a descendant of
+			* .vd-color-wrapper - so instead of .closest()/.find() to
+			* connect the two, both sides carry the attribute's select
+			* name (data-vd-filter-for / data-vd-select-name) and we look
+			* each other up through that.
+			*/
+			function vdGetColorWrapperForFilter( $filter ) {
+				var selectName = $filter.data('vd-filter-for');
+				return $('.vd-selector--color[data-vd-select-name="' + selectName + '"]').closest('.vd-color-wrapper');
+			}
+
+			function vdGetColorFilterForWrapper( $wrapper ) {
+				var selectName = $wrapper.find('.vd-selector--color').data('vd-select-name');
+				return $('.vd-color-filter[data-vd-filter-for="' + selectName + '"]');
+			}
+
+			function vdUpdateFilterOptionVisibility( $wrapper ) {
+				var $filter = vdGetColorFilterForWrapper( $wrapper );
+				if ( ! $filter.length ) {
+					return;
+				}
+
+				var searchTerm = $filter.find('.vd-color-filter-search').val().toLowerCase().trim();
+				var visibleCount = 0;
+
+				$filter.find('.vd-color-filter-option').each(function() {
+					var $option = $(this);
+					var value   = String( $option.data('vd-filter-value') );
+					var label   = String( $option.data('vd-filter-label') || '' );
+
+					var $swatchInput = $wrapper.find('.vd-option-input[data-value="' + value + '"]');
+					var isAvailable  = $swatchInput.length ? ! $swatchInput.prop('disabled') : true;
+					var matchesSearch = ! searchTerm || label.indexOf( searchTerm ) !== -1;
+					var show = isAvailable && matchesSearch;
+
+					$option.prop('hidden', ! show );
+
+					if ( show ) {
+						visibleCount++;
+					}
+
+					// A value that just became unavailable shouldn't stay
+					// checked as an active filter.
+					if ( ! isAvailable ) {
+						$option.find('.vd-color-filter-checkbox').prop('checked', false);
+					}
+				});
+
+				$filter.find('.vd-color-filter-empty').remove();
+				if ( ! visibleCount ) {
+					$filter.find('.vd-color-filter-options').append(
+						'<div class="vd-color-filter-empty">' + vdTranslations.noColorsFound + '</div>'
+					);
+				}
+			}
+
+			function vdApplyColorSwatchFilter( $wrapper ) {
+				var $filter = vdGetColorFilterForWrapper( $wrapper );
+				var checkedValues = $filter.find('.vd-color-filter-checkbox:checked')
+					.map(function() { return String( $(this).val() ); })
+					.get();
+
+				$wrapper.find('.vd-option-label--color').each(function() {
+					var $label = $(this);
+					var $input = $('#' + $label.attr('for'));
+					var value  = $input.length ? String( $input.data('value') ) : null;
+					var passesFilter = ! checkedValues.length || checkedValues.indexOf( value ) !== -1;
+
+					$label.toggleClass( 'vd-color-filtered-out', ! passesFilter );
+				});
+
+				$filter.find('.vd-color-filter-toggle').toggleClass( 'vd-filter-active', checkedValues.length > 0 );
+			}
+
+			function vdRefreshColorFilter( $wrapper ) {
+				vdUpdateFilterOptionVisibility( $wrapper );
+				vdApplyColorSwatchFilter( $wrapper );
 			}
 
 			function vdSyncSelectorStates() {
@@ -717,6 +993,10 @@ class VARIANTS_DISPLAY_Frontend {
 								$input.prop('checked', false);
 							}
 						});
+
+						if ( $group.hasClass('vd-selector--color') ) {
+							vdRefreshColorFilter( $group.closest('.vd-color-wrapper') );
+						}
 					});
 				});
 			}
@@ -730,6 +1010,7 @@ class VARIANTS_DISPLAY_Frontend {
 			$(document).on('reset_data woocommerce_update_variation_values found_variation', '.variations_form', vdSyncSelectorStates);
 
 			$(window).on('load', vdSyncSelectorStates);
+			$(window).on('load', vdRelocateColorFilters);
 			vdSyncSelectorStates();
 
 			$(document).on('click', '.vd-color-expand', function() {
@@ -744,6 +1025,50 @@ class VARIANTS_DISPLAY_Frontend {
 							? vdTranslations.showLess 
 							: vdTranslations.showMore
 					);
+			});
+
+			/**
+			* Color filter dropdown: open/close, search-as-you-type, and
+			* applying the checked colors to the swatch list.
+			*/
+			$(document).on('click', '.vd-color-filter-toggle', function( e ) {
+				e.stopPropagation();
+
+				var $toggle = $(this);
+				var $panel  = $toggle.siblings('.vd-color-filter-panel');
+				var willOpen = $panel.prop('hidden');
+
+				// Only one filter panel open at a time.
+				$('.vd-color-filter-panel').prop('hidden', true);
+				$('.vd-color-filter-toggle').attr('aria-expanded', 'false');
+
+				if ( willOpen ) {
+					$panel.prop('hidden', false);
+					$toggle.attr('aria-expanded', 'true');
+					vdUpdateFilterOptionVisibility( vdGetColorWrapperForFilter( $toggle.closest('.vd-color-filter') ) );
+					$panel.find('.vd-color-filter-search').trigger('focus');
+				}
+			});
+
+			// Clicks inside the panel shouldn't bubble up and close it.
+			$(document).on('click', '.vd-color-filter-panel', function( e ) {
+				e.stopPropagation();
+			});
+
+			// Click anywhere else closes any open panel.
+			$(document).on('click', function() {
+				$('.vd-color-filter-panel').prop('hidden', true);
+				$('.vd-color-filter-toggle').attr('aria-expanded', 'false');
+			});
+
+			$(document).on('input', '.vd-color-filter-search', function() {
+				vdUpdateFilterOptionVisibility( vdGetColorWrapperForFilter( $(this).closest('.vd-color-filter') ) );
+			});
+
+			$(document).on('change', '.vd-color-filter-checkbox', function() {
+				var $wrapper = vdGetColorWrapperForFilter( $(this).closest('.vd-color-filter') );
+				vdApplyColorSwatchFilter( $wrapper );
+				vdUpdateColorSwatches();
 			});
 
 			/**
@@ -769,7 +1094,7 @@ class VARIANTS_DISPLAY_Frontend {
 
 					var rowHeight = $labels.first().outerHeight();
 					var gap       = parseFloat( $selector.css('row-gap') ) ||
-					               parseFloat( $selector.css('gap') ) || 0;
+					              parseFloat( $selector.css('gap') ) || 0;
 					var twoRowHeight = ( rowHeight * 2 ) + gap;
 
 					$wrapper.css('--vd-two-row-height', twoRowHeight + 'px');

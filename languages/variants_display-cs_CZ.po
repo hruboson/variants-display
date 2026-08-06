@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Variants display\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-27 15:33+0000\n"
-"PO-Revision-Date: 2026-07-27 15:36+0000\n"
+"PO-Revision-Date: 2026-08-06 12:14+0000\n"
 "Last-Translator: \n"
 "Language-Team: Čeština\n"
 "Language: cs_CZ\n"
@@ -17,6 +17,7 @@ msgstr ""
 "X-Domain: variants_display"
 
 #. Description of the plugin
+#: variants-display.php
 msgid "Change the way variants are displayed on Woocommerce product detail."
 msgstr "Změnte způsob zobrazování variant u Woocommerce produktů."
 
@@ -44,6 +45,10 @@ msgstr "Způsob zobrazování"
 msgid "Enable admin menu entry"
 msgstr "Povolit nastavení v menu administrace"
 
+#: include/frontend.php:201
+msgid "Filter"
+msgstr "Filtr"
+
 #: include/admin.php:235
 msgid "General Settings"
 msgstr "Obecné nastavení"
@@ -53,6 +58,7 @@ msgid "Hide unavailable variants"
 msgstr "Skrýt nedostupné varianty"
 
 #. Author URI of the plugin
+#: variants-display.php
 msgid "https://hrubos.dev"
 msgstr ""
 
@@ -60,7 +66,12 @@ msgstr ""
 msgid "Large"
 msgstr "Dlaždice"
 
+#: include/frontend.php:726
+msgid "No colors found"
+msgstr "Žádné barvy nenalazeny"
+
 #. Author of the plugin
+#: variants-display.php
 msgid "Ondřej Hruboš"
 msgstr ""
 
@@ -76,11 +87,19 @@ msgstr ""
 msgid "Pills"
 msgstr "Tlačítka"
 
-#: include/frontend.php:571
+#: include/frontend.php:208
+msgid "Search colors"
+msgstr "Vyhledat barvy"
+
+#: include/frontend.php:207
+msgid "Search colors…"
+msgstr "Vyhledat barvy..."
+
+#: include/frontend.php:725
 msgid "Show less"
 msgstr "Zobrazit méně"
 
-#: include/frontend.php:231 include/frontend.php:570
+#: include/frontend.php:274 include/frontend.php:724
 msgid "Show more"
 msgstr "Zobrazit více"
 
@@ -93,9 +112,14 @@ msgstr "Zobrazit plugin v postranním menu administrace"
 msgid "Variants Display"
 msgstr "Zobrazení Variant"
 
-#. Name of the plugin
+#. Plugin Name of the plugin
+#: variants-display.php
 msgid "Variants display"
 msgstr "Zobrazení variant"
+
+#: variants-display.php:32
+msgid "Variants display requires WooCommerce to be active."
+msgstr ""
 
 #: include/admin.php:311
 msgid "Variants Display Settings"
